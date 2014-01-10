@@ -3,7 +3,7 @@
 
 pkgname=bde-git
 _gitname='bde'
-pkgver=2.19.baa88d9
+pkgver=baa88d9
 pkgrel=1
 pkgdesc='Bloomberg Development Environment'
 arch=('x86_64')
@@ -18,10 +18,11 @@ provides=()
 conflicts=()
 source=('git+https://github.com/bloomberg/bde')
 md5sums=(SKIP)
+options=('staticlibs')
 
 pkgver() {
     cd "$_gitname"
-    git rev-parse HEAD
+    git rev-parse --short HEAD
 }
 
 build() {
@@ -33,5 +34,6 @@ build() {
 package() {
     cd "$_gitname"
     python2 waf install
-    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/$pkgname"
+    mkdir -p -m644 "${pkgdir}/usr/share/licenses/$pkgname"
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/$pkgname/LICENSE"
 }
